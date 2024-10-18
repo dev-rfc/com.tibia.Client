@@ -1,0 +1,54 @@
+{
+    "app-id": "com.tibia.Client",
+    "runtime": "org.freedesktop.Platform",
+    "runtime-version": "24.08",
+    "sdk": "org.freedesktop.Sdk",
+    "command": "Tibia",
+    "separate-locales": false,
+    "tags": [
+        "proprietary"
+    ],
+    "finish-args": [
+        "--share=ipc",
+        "--socket=x11",
+        "--socket=pulseaudio",
+        "--share=network",
+        "--device=dri",
+        "--env=QT_QPA_PLATFORM=wayland",
+        "--filesystem=home",
+        "--socket=wayland",
+        "--talk-name=org.gnome.SessionManager",
+        "--talk-name=org.kde.StatusNotifierWatcher",
+        "--env=TMPDIR=/tmp"
+    ],
+    "modules": [
+        {
+            "name": "tibia",
+            "buildsystem": "simple",
+            "build-commands": [
+                "tar -xvf tibia.x64.tar.gz",
+                "mkdir -p /app/bin",
+                "cp -dr --no-preserve=ownership Tibia/* /app/bin/",
+                "chmod -R 775 /app/bin",
+                "install -Dm644 com.tibia.Client.png /app/share/icons/hicolor/scalable/apps/com.tibia.Client.png",
+                "install -Dm644 com.tibia.Client.desktop /app/share/applications/com.tibia.Client.desktop"
+            ],
+            "sources": [
+                {
+                    "type": "file",
+                    "path": "com.tibia.Client.desktop"
+                },
+                {
+                    "type": "file",
+                    "path": "com.tibia.Client.png"
+                },
+                {
+                    "type": "file",
+                    "dest-filename": "tibia.x64.tar.gz",
+                    "url": "https://static.tibia.com/download/tibia.x64.tar.gz",
+                    "sha256": "d78bc57b2196d3dd62a2c9e14b88401e103b0ffa8801cd2b3b94a5f2d7f8f53d"
+                }
+            ]
+        }
+    ]
+}
